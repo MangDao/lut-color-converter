@@ -1,0 +1,836 @@
+{
+  "vendors": {
+    "Sony": [
+      "Sony S-Log2 / S-Gamut",
+      "Sony S-Log3 / S-Gamut3",
+      "Sony S-Log3 / S-Gamut3.Cine",
+      "Sony S-Log3 / Venice S-Gamut3",
+      "Sony S-Log3 / Venice S-Gamut3.Cine"
+    ],
+    "Canon": [
+      "Canon Log / Cinema Gamut",
+      "Canon Log 2 / Cinema Gamut",
+      "Canon Log 3 / Cinema Gamut"
+    ],
+    "Nikon": [
+      "Nikon N-Log / N-Gamut"
+    ],
+    "Fujifilm": [
+      "Fujifilm F-Log / F-Gamut",
+      "Fujifilm F-Log2 / F-Gamut C"
+    ],
+    "Panasonic": [
+      "Panasonic Panalog / V-Gamut",
+      "Panasonic V-Log / V-Gamut"
+    ],
+    "ARRI": [
+      "ARRI LogC3 / AWG3",
+      "ARRI LogC4 / AWG4"
+    ],
+    "RED": [
+      "RED Log3G10 / REDWideGamutRGB",
+      "RED Log3G12 / REDWideGamutRGB",
+      "RED REDLogFilm / DRAGONcolor2",
+      "RED REDLogFilm / REDWideGamutRGB"
+    ],
+    "DJI": [
+      "DJI D-Log / D-Gamut"
+    ],
+    "Blackmagic": [
+      "Blackmagic 4.6K Film Gen3 / 4.6K Film Gen3",
+      "Blackmagic BMD Film Gen5 / Blackmagic Wide Gamut",
+      "Blackmagic Film 4K Gen1 / 4K Film Gen1",
+      "Blackmagic Film Gen1 / Film Gen1"
+    ],
+    "DaVinci": [
+      "DaVinci Intermediate / DaVinci Wide Gamut"
+    ],
+    "Apple": [
+      "Apple Log / Rec.2020",
+      "Apple Log 2 / Apple Wide Gamut"
+    ],
+    "FilmLight": [
+      "FilmLight T-Log / E-Gamut"
+    ],
+    "GoPro": [
+      "GoPro Protune / Protune Native"
+    ]
+  },
+  "n_vendors": 13,
+  "n_spaces": 29,
+  "spaces": {
+    "Sony S-Log3 / S-Gamut3.Cine": {
+      "primaries_source": "S-Gamut3.Cine",
+      "cctf": "S-Log3",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.766,
+          0.275
+        ],
+        [
+          0.225,
+          0.8
+        ],
+        [
+          0.089,
+          -0.087
+        ]
+      ],
+      "note": "FX/FS/Venice, the cine gamut",
+      "vendor": "Sony"
+    },
+    "Sony S-Log3 / S-Gamut3": {
+      "primaries_source": "S-Gamut3",
+      "cctf": "S-Log3",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.73,
+          0.28
+        ],
+        [
+          0.14,
+          0.855
+        ],
+        [
+          0.1,
+          -0.05
+        ]
+      ],
+      "note": "full S-Gamut3, wider than .Cine",
+      "vendor": "Sony"
+    },
+    "Sony S-Log3 / Venice S-Gamut3.Cine": {
+      "primaries_source": "Venice S-Gamut3.Cine",
+      "cctf": "S-Log3",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.7759,
+          0.2745
+        ],
+        [
+          0.18868,
+          0.82868
+        ],
+        [
+          0.10134,
+          -0.08919
+        ]
+      ],
+      "note": "Venice-specific cine gamut, primaries differ from non-Venice",
+      "vendor": "Sony"
+    },
+    "Sony S-Log3 / Venice S-Gamut3": {
+      "primaries_source": "Venice S-Gamut3",
+      "cctf": "S-Log3",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.74046,
+          0.27936
+        ],
+        [
+          0.08924,
+          0.89381
+        ],
+        [
+          0.11049,
+          -0.05258
+        ]
+      ],
+      "note": "Venice-specific full gamut",
+      "vendor": "Sony"
+    },
+    "Sony S-Log2 / S-Gamut": {
+      "primaries_source": "S-Gamut",
+      "cctf": "S-Log2",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.73,
+          0.28
+        ],
+        [
+          0.14,
+          0.855
+        ],
+        [
+          0.1,
+          -0.05
+        ]
+      ],
+      "note": "legacy S-Log2, F5/F55 era",
+      "vendor": "Sony"
+    },
+    "Canon Log / Cinema Gamut": {
+      "primaries_source": "Cinema Gamut",
+      "cctf": "Canon Log",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.74,
+          0.27
+        ],
+        [
+          0.17,
+          1.14
+        ],
+        [
+          0.08,
+          -0.1
+        ]
+      ],
+      "note": "original C-Log, C300/C100 generation",
+      "vendor": "Canon"
+    },
+    "Canon Log 2 / Cinema Gamut": {
+      "primaries_source": "Cinema Gamut",
+      "cctf": "Canon Log 2",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.74,
+          0.27
+        ],
+        [
+          0.17,
+          1.14
+        ],
+        [
+          0.08,
+          -0.1
+        ]
+      ],
+      "note": "C300 III / C500 II / R5C",
+      "vendor": "Canon"
+    },
+    "Canon Log 3 / Cinema Gamut": {
+      "primaries_source": "Cinema Gamut",
+      "cctf": "Canon Log 3",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.74,
+          0.27
+        ],
+        [
+          0.17,
+          1.14
+        ],
+        [
+          0.08,
+          -0.1
+        ]
+      ],
+      "note": "simpler log, same gamut",
+      "vendor": "Canon"
+    },
+    "Nikon N-Log / N-Gamut": {
+      "primaries_source": "N-Gamut",
+      "cctf": "N-Log",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.708,
+          0.292
+        ],
+        [
+          0.17,
+          0.797
+        ],
+        [
+          0.131,
+          0.046
+        ]
+      ],
+      "note": "Z series. NOTE: N-Gamut primaries are Rec.2020",
+      "vendor": "Nikon"
+    },
+    "Fujifilm F-Log / F-Gamut": {
+      "primaries_source": "F-Gamut",
+      "cctf": "F-Log",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.708,
+          0.292
+        ],
+        [
+          0.17,
+          0.797
+        ],
+        [
+          0.131,
+          0.046
+        ]
+      ],
+      "note": "X-T3 era. NOTE: F-Gamut primaries are Rec.2020",
+      "vendor": "Fujifilm"
+    },
+    "Fujifilm F-Log2 / F-Gamut C": {
+      "primaries_source": "F-Gamut C",
+      "cctf": "F-Log2",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.7347,
+          0.2653
+        ],
+        [
+          0.0263,
+          0.9737
+        ],
+        [
+          0.1173,
+          -0.0224
+        ]
+      ],
+      "note": "X-H2S / GFX100 II",
+      "vendor": "Fujifilm"
+    },
+    "Panasonic V-Log / V-Gamut": {
+      "primaries_source": "V-Gamut",
+      "cctf": "V-Log",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.73,
+          0.28
+        ],
+        [
+          0.165,
+          0.84
+        ],
+        [
+          0.1,
+          -0.03
+        ]
+      ],
+      "note": "Varicam / S1H / GH6 / S5 II",
+      "vendor": "Panasonic"
+    },
+    "Panasonic Panalog / V-Gamut": {
+      "primaries_source": "V-Gamut",
+      "cctf": "Panalog",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.73,
+          0.28
+        ],
+        [
+          0.165,
+          0.84
+        ],
+        [
+          0.1,
+          -0.03
+        ]
+      ],
+      "note": "legacy Panalog on the V-Gamut primaries",
+      "vendor": "Panasonic"
+    },
+    "ARRI LogC3 / AWG3": {
+      "primaries_source": "ARRI Wide Gamut 3",
+      "cctf": "ARRI LogC3",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.684,
+          0.313
+        ],
+        [
+          0.221,
+          0.848
+        ],
+        [
+          0.0861,
+          -0.102
+        ]
+      ],
+      "note": "ALEXA classic / Mini / Amira",
+      "vendor": "ARRI"
+    },
+    "ARRI LogC4 / AWG4": {
+      "primaries_source": "ARRI Wide Gamut 4",
+      "cctf": "ARRI LogC4",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.7347,
+          0.2653
+        ],
+        [
+          0.1424,
+          0.8576
+        ],
+        [
+          0.0991,
+          -0.0308
+        ]
+      ],
+      "note": "ALEXA 35",
+      "vendor": "ARRI"
+    },
+    "RED Log3G10 / REDWideGamutRGB": {
+      "primaries_source": "REDWideGamutRGB",
+      "cctf": "Log3G10",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.78031,
+          0.30425
+        ],
+        [
+          0.12159,
+          1.49399
+        ],
+        [
+          0.09561,
+          -0.08459
+        ]
+      ],
+      "note": "IPP2 pipeline",
+      "vendor": "RED"
+    },
+    "RED Log3G12 / REDWideGamutRGB": {
+      "primaries_source": "REDWideGamutRGB",
+      "cctf": "Log3G12",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.78031,
+          0.30425
+        ],
+        [
+          0.12159,
+          1.49399
+        ],
+        [
+          0.09561,
+          -0.08459
+        ]
+      ],
+      "note": "older Log3G12 curve on RWG",
+      "vendor": "RED"
+    },
+    "RED REDLogFilm / REDWideGamutRGB": {
+      "primaries_source": "REDWideGamutRGB",
+      "cctf": "REDLogFilm",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.78031,
+          0.30425
+        ],
+        [
+          0.12159,
+          1.49399
+        ],
+        [
+          0.09561,
+          -0.08459
+        ]
+      ],
+      "note": "Cineon-style log on the RWG gamut",
+      "vendor": "RED"
+    },
+    "RED REDLogFilm / DRAGONcolor2": {
+      "primaries_source": "DRAGONcolor2",
+      "cctf": "REDLogFilm",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.75866,
+          0.33036
+        ],
+        [
+          0.29492,
+          0.70805
+        ],
+        [
+          0.14417,
+          0.05036
+        ]
+      ],
+      "note": "legacy DRAGONcolour2 gamut",
+      "vendor": "RED"
+    },
+    "DJI D-Log / D-Gamut": {
+      "primaries_source": "DJI D-Gamut",
+      "cctf": "D-Log",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.71,
+          0.31
+        ],
+        [
+          0.21,
+          0.88
+        ],
+        [
+          0.09,
+          -0.08
+        ]
+      ],
+      "note": "Inspire 2 / Mavic 3. D-Log M is NOT in colour-science - see gaps",
+      "vendor": "DJI"
+    },
+    "Blackmagic BMD Film Gen5 / Blackmagic Wide Gamut": {
+      "primaries_source": "Blackmagic Wide Gamut",
+      "cctf": "Blackmagic Film Generation 5",
+      "provenance": "published",
+      "whitepoint": [
+        0.31272,
+        0.32903
+      ],
+      "primaries": [
+        [
+          0.71772,
+          0.31712
+        ],
+        [
+          0.22804,
+          0.86157
+        ],
+        [
+          0.10058,
+          -0.08205
+        ]
+      ],
+      "note": "Pocket 4K/6K, URSA, current generation",
+      "vendor": "Blackmagic"
+    },
+    "DaVinci Intermediate / DaVinci Wide Gamut": {
+      "primaries_source": "DaVinci Wide Gamut",
+      "cctf": "DaVinci Intermediate",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.8,
+          0.313
+        ],
+        [
+          0.1682,
+          0.9877
+        ],
+        [
+          0.079,
+          -0.1155
+        ]
+      ],
+      "note": "Resolve's native colour-managed working space",
+      "vendor": "DaVinci"
+    },
+    "Blackmagic Film Gen1 / Film Gen1": {
+      "primaries_source": "(published)",
+      "cctf": "BMD Film (RE, psychopath.io 'Blackmagic Design's Color Spaces')",
+      "provenance": "reverse-engineered",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.91726,
+          0.25024
+        ],
+        [
+          0.28333,
+          1.70723
+        ],
+        [
+          0.08557,
+          -0.07078
+        ]
+      ],
+      "note": "original BMCC / Pocket generation. Reverse engineered, not published.",
+      "vendor": "Blackmagic"
+    },
+    "Blackmagic Film 4K Gen1 / 4K Film Gen1": {
+      "primaries_source": "(published)",
+      "cctf": "BMD 4K Film (RE, psychopath.io 'Blackmagic Design's Color Spaces')",
+      "provenance": "reverse-engineered",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.74223,
+          0.2859
+        ],
+        [
+          0.41401,
+          1.30354
+        ],
+        [
+          0.03421,
+          -0.08332
+        ]
+      ],
+      "note": "BMD 4K Film. Reverse engineered, not published.",
+      "vendor": "Blackmagic"
+    },
+    "Blackmagic 4.6K Film Gen3 / 4.6K Film Gen3": {
+      "primaries_source": "(published)",
+      "cctf": "BMD 4.6K Film Gen3 (RE, psychopath.io 'Blackmagic Design's Color Spaces')",
+      "provenance": "reverse-engineered",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.86083,
+          0.36887
+        ],
+        [
+          0.32821,
+          0.61559
+        ],
+        [
+          0.07825,
+          -0.02326
+        ]
+      ],
+      "note": "URSA Mini 4.6K / Production 4K. Reverse engineered, not published.",
+      "vendor": "Blackmagic"
+    },
+    "Apple Log / Rec.2020": {
+      "primaries_source": "ITU-R BT.2020",
+      "cctf": "Apple Log Profile",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.708,
+          0.292
+        ],
+        [
+          0.17,
+          0.797
+        ],
+        [
+          0.131,
+          0.046
+        ]
+      ],
+      "note": "iPhone 15 Pro / 16 Pro. Rec.2020 primaries",
+      "vendor": "Apple"
+    },
+    "Apple Log 2 / Apple Wide Gamut": {
+      "primaries_source": "(published)",
+      "cctf": "Apple Log Profile",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.725,
+          0.301
+        ],
+        [
+          0.221,
+          0.814
+        ],
+        [
+          0.068,
+          -0.076
+        ]
+      ],
+      "note": "iPhone 17 Pro. Same curve as Apple Log, wider gamut",
+      "vendor": "Apple"
+    },
+    "FilmLight T-Log / E-Gamut": {
+      "primaries_source": "FilmLight E-Gamut",
+      "cctf": "T-Log",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.8,
+          0.3177
+        ],
+        [
+          0.18,
+          0.9
+        ],
+        [
+          0.065,
+          -0.0805
+        ]
+      ],
+      "note": "Baselight / FLUX",
+      "vendor": "FilmLight"
+    },
+    "GoPro Protune / Protune Native": {
+      "primaries_source": "Protune Native",
+      "cctf": "Protune",
+      "provenance": "published",
+      "whitepoint": [
+        0.3127,
+        0.329
+      ],
+      "primaries": [
+        [
+          0.69848,
+          0.19303
+        ],
+        [
+          0.32956,
+          1.0246
+        ],
+        [
+          0.10844,
+          -0.03468
+        ]
+      ],
+      "note": "action cameras",
+      "vendor": "GoPro"
+    }
+  },
+  "pairwise_routes": 812,
+  "hub_routes": 58,
+  "known_gaps": [
+    {
+      "space": "DJI D-Log M",
+      "kind": "BLOCKED",
+      "reason": "DJI has refused repeated requests to document this curve; it is explicitly a black box. It is NOT the same curve as D-Log ('slightly less flat', per CineD's review). No published constants exist, and deriving them means reverse-engineering DJI's own LUTs, which their terms do not permit. Community efforts exist (Zeb Gardner's colour-chart based fit) but are unofficial, method-dependent and not published as constants."
+    },
+    {
+      "space": "Blackmagic 4K Film Gen 3",
+      "kind": "not paired",
+      "reason": "a gamut exists in the reverse-engineered set but no matching curve was published, so the pair is ambiguous. Skipped rather than guessed."
+    },
+    {
+      "space": "Blackmagic Broadcast Film Gen 4",
+      "kind": "ambiguous",
+      "reason": "the curve exists but its gamut pairing ('Video Gen 4') is a different family; pairing them would be a guess."
+    },
+    {
+      "space": "Blackmagic 4.6K Film Gen 1",
+      "kind": "no data",
+      "reason": "the reverse-engineering source reports this failed to export cleanly."
+    },
+    {
+      "space": "Sony S-Log (original)",
+      "kind": "obsolete",
+      "reason": "pre-S-Log2, essentially unused"
+    },
+    {
+      "space": "Canon Log 2/3 on non-Cinema Gamut",
+      "kind": "rare",
+      "reason": "essentially never seen"
+    }
+  ],
+  "reverse_engineered": {
+    "source": "psychopath.io 'Blackmagic Design's Color Spaces' (2022-04-23), reverse-engineered from DaVinci Resolve output",
+    "method": "encoded->linear LUTs extracted from Resolve via a 2^17-step gradient OpenEXR, then analytic constants fitted; tool open sourced",
+    "accuracy": "avg relative error ~7e-7, max < 1e-4 (Pocket Film series worse)",
+    "caveat": "derived from Resolve's implementation, not from BMD camera silicon. White points land slightly off D65 (0.3135, 0.3305), which is reverse-engineering noise, not a real white point.",
+    "validation": "the Gen5 constants below reproduce colour-science's published Blackmagic Film Generation 5 to ~1e-7 relative, which is an independent cross-check of the whole method."
+  },
+  "gen5_cross_validation": {
+    "encode_median_rel": 5.044685956572684e-08,
+    "encode_max_rel": 5.410246287744144e-07,
+    "decode_median_rel": 4.905669450708353e-07,
+    "decode_max_rel": 0.004202828662276186,
+    "segment_gap": 4.141131881851834e-14
+  }
+}

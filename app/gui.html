@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/icon.png" type="image/png">
+<title>LUT 跨色域转换</title>
+<style>
+:root{
+  --bg:#f7f7f5; --card:#fff; --line:#e4e4df; --line2:#d3d3cc;
+  --fg:#1f1f1d; --fg2:#5f5f5a; --fg3:#8a8a83;
+  --teal:#0f6e56; --teal-bg:#e1f5ee;
+  --ok:#3b6d11; --ok-bg:#eaf3de;
+  --warn:#854f0b; --warn-bg:#faeeda;
+  --bad:#a32d2d; --bad-bg:#fcebeb;
+  --blue:#185fa5; --blue-bg:#e6f1fb;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:13px/1.6 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 22px 80px}
+h1{font-size:19px;font-weight:500;margin:0 0 4px}
+h2{font-size:14px;font-weight:500;margin:0}
+h3{font-size:13px;font-weight:500;margin:0 0 6px;color:var(--fg2)}
+.sub{color:var(--fg2);margin:0 0 14px}
+.muted{color:var(--fg3)}
+.mono{font-family:ui-monospace,Consolas,"Cascadia Mono",monospace}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:16px 18px;margin-bottom:14px}
+.cardhead{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.cardhead .hint{color:var(--fg3);font-size:12px}
+.pillrow{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+.pill{border:1px solid var(--line2);border-radius:999px;padding:3px 11px;font-size:12px;
+  color:var(--fg2);background:#fff}
+.pill b{font-weight:500;color:var(--fg)}
+.pill.t{background:var(--teal-bg);border-color:#9fe1cb;color:var(--teal)}
+.drop{border:1px dashed var(--line2);border-radius:10px;padding:24px 16px;text-align:center;
+  color:var(--fg2);cursor:pointer;background:#fcfcfb;transition:.12s}
+.drop:hover,.drop.over{border-color:var(--teal);background:var(--teal-bg);color:var(--teal)}
+.demos{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.chip{border:1px solid var(--line2);background:#fff;border-radius:8px;padding:6px 11px;
+  font-size:12px;cursor:pointer;color:var(--fg2);transition:.12s;text-align:left}
+.chip:hover{border-color:var(--teal);color:var(--teal)}
+.chip b{display:block;font-weight:500;color:var(--fg);font-size:12px}
+.chip span{font-size:11px;color:var(--fg3)}
+button.act{border:1px solid var(--teal);background:var(--teal);color:#fff;border-radius:8px;
+  padding:7px 15px;font-size:13px;cursor:pointer;font-family:inherit}
+button.act:hover{filter:brightness(1.08)}
+button.act.ghost{background:#fff;color:var(--teal)}
+button.act:disabled{opacity:.45;cursor:not-allowed}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;font-weight:500;color:var(--fg3);padding:5px 8px;
+  border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:5px 8px;border-bottom:1px solid #f2f2ee;vertical-align:middle}
+td.num,th.num{text-align:right;font-family:ui-monospace,Consolas,monospace}
+tr:last-child td{border-bottom:none}
+.badge{display:inline-block;border-radius:6px;padding:2px 9px;font-size:12px;border:1px solid}
+.b-ok{background:var(--ok-bg);border-color:#c0dd97;color:var(--ok)}
+.b-warn{background:var(--warn-bg);border-color:#fac775;color:var(--warn)}
+.b-info{background:var(--blue-bg);border-color:#b5d4f4;color:var(--blue)}
+.b-bad{background:var(--bad-bg);border-color:#f7c1c1;color:var(--bad)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
+.kv{display:grid;grid-template-columns:160px 1fr;gap:4px 12px;font-size:12.5px;margin:0}
+.kv dt{color:var(--fg3)}
+.kv dd{margin:0}
+.note{border-left:2px solid var(--line2);padding:2px 0 2px 10px;color:var(--fg2);
+  font-size:12px;margin:8px 0}
+.note.warn{border-color:#fac775;color:var(--warn)}
+.note.bad{border-color:#f7c1c1;color:var(--bad)}
+.note.ok{border-color:#c0dd97;color:var(--ok)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row label{color:var(--fg3);font-size:12px;min-width:52px}
+select,input[type=number]{font-family:inherit;font-size:12.5px;padding:5px 7px;
+  border:1px solid var(--line2);border-radius:7px;background:#fff;color:var(--fg);max-width:100%}
+select.s{min-width:250px}
+#busy{position:fixed;inset:0;background:rgba(247,247,245,.72);display:none;
+  align-items:center;justify-content:center;z-index:9;color:var(--fg2);font-size:14px}
+#busy.on{display:flex}
+code{background:#f2f2ee;border-radius:4px;padding:1px 5px;font-size:12px}
+.err{background:var(--bad-bg);border:1px solid #f7c1c1;color:var(--bad);
+  border-radius:10px;padding:11px 14px;margin-bottom:12px}
+.hintbox{background:var(--blue-bg);border:1px solid #b5d4f4;border-radius:8px;
+  padding:9px 12px;font-size:12.5px;color:#0c447c;margin-bottom:12px}
+</style>
+</head>
+<body>
+<div id="busy">处理中…</div>
+<div class="wrap">
+
+<header>
+  <h1>LUT 跨色域转换</h1>
+  <p class="sub">载入一枚 LUT，告诉它现在吃/吐什么色彩空间，换掉其中任意一端，导出。</p>
+  <div class="pillrow" id="status"><span class="pill">正在启动…</span></div>
+</header>
+
+<div class="hintbox">
+  <b>输入色彩空间由你指定，工具不猜。</b>
+  LUT 文件里没有记录它的输入制式，而这一点只有制作或下载它的人知道。
+  手动选一次比让程序猜更可靠——实测在 19 枚真实厂商 LUT 上，
+  猜错会以「很确信」的方式答错 3 次。
+</div>
+
+<div id="err"></div>
+
+<section class="card">
+  <div class="cardhead">
+    <h2>1 · 载入</h2>
+    <span class="hint" id="fmts"></span>
+  </div>
+  <div class="drop" id="drop">
+    把 LUT 文件拖到这里，或点击选择
+    <div class="muted" style="font-size:12px;margin-top:4px">只在本机处理，不经任何网络</div>
+  </div>
+  <input type="file" id="file" hidden>
+  <div class="demos" id="demos"></div>
+</section>
+
+<div id="out"></div>
+
+<section class="card">
+  <div class="cardhead">
+    <h2>自检</h2>
+    <span class="hint">内置样例重新定向后，与直接计算的结果逐点比对</span>
+    <button class="act ghost" id="selftest" style="margin-left:auto">运行</button>
+  </div>
+  <div id="stout" class="muted">尚未运行。</div>
+</section>
+
+</div>
+
+<script>
+const S = { app:null, insp:null, key:null, sin:null, sout:null };
+const $ = s => document.querySelector(s);
+const esc = s => String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pct = x => (100*x).toFixed(2)+'%';
+const sci = x => (x==null? '—' : Number(x).toExponential(2));
+
+function busy(on){ $('#busy').classList.toggle('on', !!on); }
+function fail(m){ $('#err').innerHTML = '<div class="err">'+esc(m)+'</div>'; }
+function clearErr(){ $('#err').innerHTML=''; }
+
+async function jget(url, opts){
+  const r = await fetch(url, opts);
+  const ct = r.headers.get('content-type')||'';
+  if(!r.ok){
+    let m = r.status+' '+r.statusText;
+    if(ct.includes('json')){ try{ m = (await r.json()).error || m; }catch(e){} }
+    throw new Error(m);
+  }
+  return ct.includes('json') ? r.json() : r;
+}
+
+/* ---------------------------------------------------------------- boot */
+async function boot(){
+  try{ S.app = await jget('/api/app'); }
+  catch(e){
+    $('#status').innerHTML = '<span class="pill b-bad">启动失败</span>';
+    fail('服务启动失败：'+e.message); return;
+  }
+  const a = S.app;
+  $('#status').innerHTML =
+    '<span class="pill t">就绪 <b>'+a.ready_ms+' ms</b></span>'+
+    '<span class="pill">色彩空间 <b>'+a.spaces.length+'</b> 个</span>'+
+    '<span class="pill">可读 <b>'+a.read_formats.length+'</b> 种格式</span>'+
+    '<span class="pill">可写 <b>'.concat(Object.keys(a.write_formats).join(' / '),'</b></span>');
+  $('#fmts').textContent = '读：'+a.read_formats.join('  ');
+  $('#demos').innerHTML = a.demos.map(d =>
+    '<button class="chip" data-demo="'+esc(d.id)+'"><b>'+esc(d.label)+'</b>'+
+    '<span>'+esc(d.note)+'</span></button>').join('');
+  document.querySelectorAll('[data-demo]').forEach(b =>
+    b.onclick = () => loadDemo(b.dataset.demo));
+}
+
+/* ---------------------------------------------------------------- input */
+const drop = $('#drop');
+drop.onclick = () => $('#file').click();
+$('#file').onchange = e => { if(e.target.files[0]) upload(e.target.files[0]); };
+['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => {
+  e.preventDefault(); drop.classList.add('over'); }));
+['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => {
+  e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', e => { const f = e.dataTransfer.files[0]; if(f) upload(f); });
+
+async function upload(file){
+  busy(true); clearErr();
+  try{
+    S.insp = await jget('/api/inspect?name='+encodeURIComponent(file.name),
+                        {method:'POST', body:file});
+    afterInspect();
+  }catch(e){ fail('读取失败：'+e.message); }
+  busy(false);
+}
+
+async function loadDemo(id){
+  busy(true); clearErr();
+  try{
+    S.insp = await jget('/api/inspect?demo='+encodeURIComponent(id), {method:'POST'});
+    afterInspect();
+  }catch(e){ fail('读取失败：'+e.message); }
+  busy(false);
+}
+
+function afterInspect(){
+  const r = S.insp;
+  S.key = r.key;
+  const h = r.filename_hints || {hints:[]};
+  if(r.demo && r.demo.spaces){ S.sin = r.demo.spaces[0]; S.sout = r.demo.spaces[1]; }
+  else if(h.hints && h.hints.length){ S.sin = h.hints[0].space; S.sout = S.app.display_space; }
+  else { S.sin = S.app.spaces[0]; S.sout = S.app.display_space; }
+  render();
+}
+
+/* ---------------------------------------------------------------- render */
+function render(){
+  $('#out').innerHTML = cardFile() + cardSpaces() + cardConvert();
+  wire();
+}
+
+function cardFile(){
+  const r = S.insp, f = r.file, m = r.measured, h = r.filename_hints || {};
+  const hits = (h.hints||[]);
+  return '<section class="card"><div class="cardhead"><h2>2 · 文件里写了什么</h2>'+
+    '<span class="hint">直接从文件读出的，不含任何推断</span></div>'+
+    '<div class="grid2"><div><h3>格式</h3><dl class="kv">'+
+      kv('文件', esc(f.name))+
+      kv('格式', esc(f.format)+(f.grid_order? '　'+esc(f.grid_order):''))+
+      kv('LUT 类型', esc(f.lut_type)+ (f.size? '　'+f.size+'³':'') )+
+      kv('输出位深', esc(f.bits? f.bits+' bit' : '—'))+
+      kv('刻度来源', esc(f.scale_source||'—'))+
+      kv('输入轴', esc(f.input_axis_kind||'—'))+
+    '</dl></div><div><h3>实测</h3><dl class="kv">'+
+      kv('输出范围', m.output_range[0]+' … '+m.output_range[1])+
+      kv('钉在 0 的比例', pct(m.pinned_at_0))+
+      kv('钉在 1 的比例', pct(m.pinned_at_1))+
+      kv('与恒等变换的距离', m.identity_distance)+
+    '</dl>'+
+    (hits.length
+      ? '<h3 style="margin-top:12px">文件名/注释里出现了</h3><table>'+
+        '<tr><th>命中的字</th><th>对应的空间</th></tr>'+
+        hits.map(x=>'<tr><td class="mono">'+esc(x.token)+'</td><td>'+esc(x.space)+'</td></tr>').join('')+
+        '</table><div class="note">这只是把文件里已有的字抄出来，不是判断。请自己确认。</div>'
+      : '<div class="note">文件名和注释里没有可识别的制式字样。</div>')+
+    '</div></div>'+
+    (r.notes||[]).map(n=>'<div class="note">'+esc(n)+'</div>').join('')+
+  '</section>';
+}
+
+function kv(k,v){ return '<dt>'+esc(k)+'</dt><dd>'+v+'</dd>'; }
+
+function opts(sel, includeDisplay){
+  const list = S.app.spaces.concat(includeDisplay===false?[]:[S.app.display_space]);
+  return list.map(s=>'<option'+(s===sel?' selected':'')+'>'+esc(s)+'</option>').join('');
+}
+
+function cardSpaces(){
+  return '<section class="card"><div class="cardhead"><h2>3 · 这枚 LUT 现在吃 / 吐什么</h2>'+
+    '<span class="hint">必须由你指定</span></div>'+
+    '<div class="row"><label>输入</label><select class="s" id="sin">'+opts(S.sin)+'</select></div>'+
+    '<div class="row" style="margin-top:8px"><label>输出</label>'+
+      '<select class="s" id="sout">'+opts(S.sout)+'</select></div>'+
+    '<div class="note">常见的组合：相机 log → Rec.709（现场监看）；'+
+      'Rec.709 → 相机 log（反向）；相机 log → 相机 log（同空间风格）。</div>'+
+  '</section>';
+}
+
+function cardConvert(){
+  return '<section class="card"><div class="cardhead"><h2>4 · 换成</h2>'+
+    '<span class="hint">输入端、输出端可以各自换，也可以只换一个</span></div>'+
+    '<div class="grid2"><div><h3>输入端</h3><div class="row">'+
+      '<select class="s" id="sinNew">'+opts(S.sin)+'</select></div></div>'+
+      '<div><h3>输出端</h3><div class="row">'+
+      '<select class="s" id="soutNew">'+opts(S.sout)+'</select></div></div></div>'+
+    '<div class="row" style="margin-top:14px">'+
+      '<label>网格</label><select id="grid">'+
+      '<option value="33">33³（.cube 默认）</option>'+
+      '<option value="65">65³（更细，文件更大）</option>'+
+      '<option value="17">17³（最省，仅供相机内用）</option></select>'+
+      '<label>格式</label><select id="fmt">'+
+      Object.entries(S.app.write_formats).map(([k,v])=>
+        '<option value="'+k.replace('.','')+'">'+esc(k)+' — '+esc(v)+'</option>').join('')+
+      '</select>'+
+      '<button class="act" id="go">检查并导出</button>'+
+      '<a id="dl" style="display:none"><button class="act ghost">下载</button></a>'+
+      '<span class="muted" id="cmsg"></span></div>'+
+    '<div id="creport"></div>'+
+  '</section>';
+}
+
+function wire(){
+  ['sin','sout'].forEach(id => $('#'+id).onchange = () => {
+    const v = $('#'+id).value;
+    if(id==='sin'){ S.sin = v; $('#sinNew').value = v; } else { S.sout = v; $('#soutNew').value = v; }
+  });
+  const g = $('#grid'), f = $('#fmt');
+  const sync = () => {
+    if(f.value === 'vlt'){ g.value = '17'; g.disabled = true;
+      $('#cmsg').textContent = '.vlt 规范只定义 17³'; }
+    else { g.disabled = false; $('#cmsg').textContent = ''; }
+  };
+  f.onchange = sync; sync();
+  $('#go').onclick = doConvert;
+}
+
+async function doConvert(){
+  const q = new URLSearchParams({
+    key: S.key, sin: $('#sin').value, sout: $('#sout').value,
+    sin_new: $('#sinNew').value, sout_new: $('#soutNew').value,
+    grid: $('#grid').value, fmt: $('#fmt').value
+  });
+  busy(true); clearErr();
+  try{
+    const st = await jget('/api/convert?'+q.toString()+'&dry=1');
+    report(st, q.toString());
+  }catch(e){ fail('转换失败：'+e.message); }
+  busy(false);
+}
+
+function report(st, url){
+  const a = $('#dl'); a.href = '/api/convert?'+url; a.setAttribute('download','');
+  a.style.display = 'inline';
+  const v = st.verify_same_space;
+  const inF = st.input_out_of_range_fraction, outF = st.output_out_of_range_fraction;
+
+  let h = '<div class="grid3" style="margin-top:16px">'+
+    '<div><h3>转换后</h3><dl class="kv">'+
+      kv('输入', esc(st.sin_new))+
+      kv('输出', esc(st.sout_new))+
+      kv('网格', st.grid+'³')+
+      kv('输出范围', st.output_range[0]+' … '+st.output_range[1])+
+      kv('钉在 0/1 的比例', pct(st.output_pinned_fraction))+
+    '</dl></div>'+
+    '<div><h3>输入端检查</h3><dl class="kv">'+
+      kv('均匀采样越界', pct(inF))+
+      kv('最大超出量', inF>0? Number(st.input_max_overshoot).toFixed(3) : '—')+
+      kv('判定', inF===0? '精确' : '角点会夹住，真实内容基本不受影响')+
+    '</dl></div>'+
+    '<div><h3>输出端检查</h3><dl class="kv">'+
+      kv('超出目标值域', pct(outF))+
+      kv('最大超出量', outF>0? Number(st.output_max_overshoot).toFixed(3) : '—')+
+      kv('判定', outF===0? '精确' : '有信息损失')+
+    '</dl></div></div>';
+
+  h += '<div class="grid2" style="margin-top:14px"><div><h3>自检：同空间还原</h3>'+
+    '<dl class="kv">'+
+      kv('最大误差', sci(v.max_abs_error))+
+      kv('平均误差', sci(v.mean_abs_error))+
+      kv('结论', v.exact? '逐位精确' : '不精确')+
+    '</dl></div><div><h3>怎么读这些数</h3>'+
+    '<div class="note">「同空间还原」把输入输出都设成原来的值，转换必须还原出原 LUT。'+
+      '不通过就说明换算链路有问题，后面的数都不用看。</div></div></div>';
+
+  if(st.unchanged){
+    h += '<div class="note">输入输出都没改，导出的就是原 LUT。</div>';
+  }
+  const warn = [];
+  if(inF > 0) warn.push(
+    '<b>输入端有 '+pct(inF)+' 的采样越界。</b>『'+esc(st.sin)+'』这条 log 曲线的可表示范围是 '+
+    Number(st.input_range_detail.lo).toFixed(4)+' … '+Number(st.input_range_detail.hi).toFixed(2)+
+    '，有一部分换算结果落在它外面（最大超出 '+Number(st.input_max_overshoot).toFixed(2)+
+    ' 线性单位），那里只能被夹住。<br>'+
+    '<b>但要注意这个百分比的口径：</b>它是把整个码值立方体<b>均匀</b>采样得到的，'+
+    '里面包含纯红、纯绿的过曝角点——那不是真实画面里会出现的颜色。'+
+    '在真实内容上（MacBeth 色卡 + 灰阶 + 色相扫描，共 4709 色）实测'+
+    '<b>13 家厂商 17 种互转组合全部 0 损失</b>。所以这个数是<b>上界</b>，不是你会遇到的比例。'+
+    '真正会丢的是画面里过曝又极艳的那一小块（比如阳光直射的纯色物体）。');
+  if(outF > 0) warn.push(
+    '输出端有 <b>'+pct(outF)+'</b> 的取值超出「'+esc(st.sout_new)+
+    '」能编码的范围（最大超出 '+Number(st.output_max_overshoot).toFixed(2)+'）。'+
+    '这一端在换算时会被夹住。');
+  if(st.note) warn.push(esc(st.note));
+  if(warn.length) h += '<div class="note warn">'+warn.join('</div><div class="note warn">')+'</div>';
+  if(inF===0 && outF===0 && !st.unchanged)
+    h += '<div class="note ok">两端都没有超出值域，这次换算在数学上是精确的；'+
+      '实际误差只来自网格密度。</div>';
+
+  $('#creport').innerHTML = h;
+}
+
+/* ---------------------------------------------------------------- selftest */
+$('#selftest').onclick = async () => {
+  busy(true); $('#stout').textContent = '运行中…';
+  try{
+    const r = await jget('/api/selftest');
+    $('#stout').innerHTML =
+      '<table><tr><th>样例</th><th>目标</th><th class="num">输入端超界</th>'+
+      '<th class="num">输出端超界</th><th class="num">平均误差</th>'+
+      '<th class="num">最大误差</th><th>同空间还原</th></tr>'+
+      r.rows.map(x=>'<tr><td>'+esc(x.id)+'</td><td class="muted" style="font-size:11.5px">'+
+          esc(x.to)+'</td>'+
+        '<td class="num">'+pct(x.oob)+'</td><td class="num">'+pct(x.oob_out)+'</td>'+
+        '<td class="num">'+Number(x.table_mean).toFixed(5)+'</td>'+
+        '<td class="num">'+Number(x.table_max).toFixed(4)+'</td>'+
+        '<td>'+(x.verify_same_space.exact
+            ? '<span class="badge b-ok">逐位精确</span>'
+            : '<span class="badge b-bad">不精确</span>')+'</td></tr>').join('')+
+      '</table><div class="note">'+
+      r.summary+'</div>';
+  }catch(e){ $('#stout').innerHTML = '<span class="badge b-bad">'+esc(e.message)+'</span>'; }
+  busy(false);
+};
+
+boot();
+</script>
+</body>
+</html>

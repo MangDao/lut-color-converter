@@ -1,0 +1,34 @@
+# Build outputs. The distributable is rebuilt by build/build_package.py and
+# published as a Release; committing a 170 MB vendored Python would make every
+# clone that heavy and every diff unreadable.
+*.zip
+package/
+package_share/
+runtime/
+
+# Regenerable artefacts. The scripts in research/ rebuild all of this.
+out/
+**/out/
+uploads/
+*.npz
+*.npy
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/lib/
+dist/
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+Desktop.ini
+
+# Personal working notes - not part of the project
+.workbuddy/
+docshots/
