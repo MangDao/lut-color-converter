@@ -19,7 +19,7 @@ ARRI、RED、DJI、Blackmagic、DaVinci、Apple、FilmLight、GoPro。
 
 ## 下载
 
-到 [Releases](../../releases) 页面下载 `LUT跨色域转换.zip`（约 37 MB）。
+到 [Releases](../../releases) 页面下载 **`LUT-Converter-v1.0.zip`**（37 MB）。
 
 解压后：
 
@@ -28,6 +28,14 @@ ARRI、RED、DJI、Blackmagic、DaVinci、Apple、FilmLight、GoPro。
 3. 回桌面，双击新出现的图标
 
 详细图文说明在包里的 `docs/使用说明.txt`（6 页），更快的版本在 `docs/先看这里.txt`。
+
+> **⚠️ 只有 Windows 能用。**
+> 那个包里内置的是 Windows 版的 Python 运行时。
+> macOS / Linux 请从源码运行，见下面的「从源码运行」一节。
+
+> **资产文件名用 ASCII**（`LUT-Converter-v1.0.zip`）是刻意的：
+> 中文文件名在上传过程中被浏览器/服务器的编码处理弄坏过，
+> 变成过 `LUT.-.zip` 这种没法认的名字。
 
 ---
 
